@@ -127,6 +127,58 @@ body {
   color: var(--ocean-deep);
 }
 
+/* Quit confirmation dialog */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 61, 98, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 10;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.dialog {
+  background: var(--sand);
+  border-radius: 20px;
+  padding: 1.5rem;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.dialog-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--ocean-deep);
+  margin-bottom: 0.5rem;
+}
+
+.dialog-text {
+  font-size: 1rem;
+  margin-bottom: 1.3rem;
+}
+
+.dialog-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.dialog-confirm {
+  background: var(--wrong);
+}
+
+.dialog-cancel {
+  background: var(--seaweed);
+}
+
 .fish-card {
   background: #fff; /* guide photos sit on white */
   border-radius: 20px;

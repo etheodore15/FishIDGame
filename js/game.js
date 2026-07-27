@@ -258,10 +258,16 @@
       "Every angler starts somewhere — play again to learn the fish! 🌊";
   }
 
+  var quitOverlay = document.getElementById("quit-overlay");
+
+  function openQuitDialog() { quitOverlay.classList.remove("hidden"); }
+  function closeQuitDialog() { quitOverlay.classList.add("hidden"); }
+
   // End the current game and return to the start screen (where it can be
   // restarted). Clears any running fact-screen countdown.
   function quitGame() {
     if (gateTimer) { clearInterval(gateTimer); gateTimer = null; }
+    closeQuitDialog();
     showScreen(el.startScreen);
   }
 
@@ -269,6 +275,8 @@
   el.nextButton.addEventListener("click", nextQuestion);
   el.playAgainButton.addEventListener("click", function () { showScreen(el.startScreen); });
   Array.prototype.forEach.call(document.querySelectorAll("[data-quit]"), function (b) {
-    b.addEventListener("click", quitGame);
+    b.addEventListener("click", openQuitDialog);
   });
+  document.getElementById("quit-confirm").addEventListener("click", quitGame);
+  document.getElementById("quit-cancel").addEventListener("click", closeQuitDialog);
 })();

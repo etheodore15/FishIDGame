@@ -67,6 +67,18 @@
       <button id="play-again-button" class="big-button">Play Again</button>
     </section>
 
+    <!-- Quit confirmation dialog -->
+    <div id="quit-overlay" class="overlay hidden">
+      <div class="dialog">
+        <p class="dialog-title">Quit the game?</p>
+        <p class="dialog-text">Your progress this game will be lost.</p>
+        <div class="dialog-buttons">
+          <button id="quit-cancel" class="big-button dialog-cancel">Keep Playing</button>
+          <button id="quit-confirm" class="big-button dialog-confirm">Quit</button>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <script src="data/species.js"></script>
