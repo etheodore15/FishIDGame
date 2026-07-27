@@ -182,6 +182,7 @@
     el.progress.textContent = "Question " + (current + 1) + " of " + questions.length;
     el.score.textContent = "Score: " + score;
     el.fishImage.src = q.imageSrc;
+    el.fishImage.alt = "Fish to identify"; // never reveal the answer here
     el.questionText.textContent = q.prompt;
     el.answers.innerHTML = "";
     q.options.forEach(function (option, index) {
@@ -202,6 +203,7 @@
 
     // Move to the fact screen showing the fish, the result and the facts.
     el.factImage.src = q.imageSrc;
+    el.factImage.alt = (q.fish && q.fish.commonName) || ""; // now revealed
     el.factProgress.textContent = "Question " + (current + 1) + " of " + questions.length;
     el.factScore.textContent = "Score: " + score;
     el.feedbackText.textContent = right
