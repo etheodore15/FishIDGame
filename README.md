@@ -32,11 +32,11 @@ its picture into `images/` and append an entry:
   scientificName: "Optional latin name",
   image: "images/unique-slug.jpg",          // required
   source: "nsw",                            // which fishing guide it came from
-  sizeLimit: "36 cm minimum",               // optional, shown in the fun fact
-  bagLimit: "5",                            // optional
   habitat: "Estuaries and coastal bays",    // optional
   funFact: "Shown after answering."         // optional
 }
+// Do NOT add size limits, bag limits or seasons — regulations change and
+// are intentionally kept out of the game.
 ```
 
 When guides from other states are added later, register them in
@@ -47,11 +47,16 @@ When guides from other states are added later, register them in
 The game contains **398 species** with photos from three official sources:
 
 - **15 freshwater** species — NSW Recreational Freshwater Fishing Guide 2025–2026
-  (with size limits, bag limits, habitat and fun facts)
+  (habitat and fun facts)
 - **40 saltwater** species — NSW Recreational Saltwater Fishing Guide 2024–2025
-  (with size limits, bag limits, habitat and fun facts)
+  (habitat and fun facts)
 - **343 Queensland** species — Queensland Government / CSIRO fish species guide
   (photo + name)
+
+> **Fishing regulations are deliberately excluded.** Size limits, bag limits,
+> and open/closed seasons change over time, so the game does not publish them.
+> The data files carry only identification and natural-history information.
+> Always check the current official guide before fishing.
 
 Additionally, **373 species carry extra facts** pulled from the Queensland
 guide's per-species pages (`data/details.js`): scientific name, family,
@@ -75,6 +80,7 @@ Next up: guides from other states.
 ## Extending the questions
 
 `js/game.js` has a question-generator registry. Species identification is
-enabled now; generators for **size limit** and **habitat** questions are
-already written and can be turned on by adding `"sizeLimit"` / `"habitat"`
-to `ENABLED_QUESTION_TYPES` once the imported data fills those fields.
+enabled now; a **habitat** question generator is already written and can be
+turned on by adding `"habitat"` to `ENABLED_QUESTION_TYPES`. (There is
+deliberately no size-limit or bag-limit question type — those are regulations
+that change over time.)

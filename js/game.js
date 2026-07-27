@@ -1,10 +1,12 @@
 // Blair's Fish ID Game
 //
 // Question types are pluggable: each generator takes a species and the full
-// list, and returns { imageSrc, prompt, options, correctIndex, funFact }.
-// Only "species" is enabled today; "sizeLimit" and "habitat" generators are
-// ready below and can be switched on by adding them to ENABLED_QUESTION_TYPES
-// once the imported data reliably has those fields.
+// list, and returns { imageSrc, prompt, options, correctIndex, fish }.
+// Only "species" is enabled today; a "habitat" generator is ready below and
+// can be switched on by adding it to ENABLED_QUESTION_TYPES.
+//
+// Note: no question type asks about fishing regulations (size/bag limits,
+// seasons) — those change over time and are intentionally not part of the game.
 
 (function () {
   "use strict";
@@ -25,26 +27,6 @@
         prompt: "Which fish is this?",
         options: options,
         correctIndex: options.indexOf(fish.commonName),
-        fish: fish
-      };
-    },
-
-    // Future: "What is the size limit for the <name>?"
-    sizeLimit: function (fish, allSpecies) {
-      if (!fish.sizeLimit) return null;
-      var wrong = pickRandom(
-        allSpecies.filter(function (s) {
-          return s.id !== fish.id && s.sizeLimit && s.sizeLimit !== fish.sizeLimit;
-        }),
-        OPTION_COUNT - 1
-      ).map(function (s) { return s.sizeLimit; });
-      if (wrong.length < OPTION_COUNT - 1) return null;
-      var options = shuffle(wrong.concat(fish.sizeLimit));
-      return {
-        imageSrc: fish.image,
-        prompt: "What is the size limit for the " + fish.commonName + "?",
-        options: options,
-        correctIndex: options.indexOf(fish.sizeLimit),
         fish: fish
       };
     },
@@ -93,11 +75,6 @@
     if (fish.habitat) where.push(esc(fish.habitat));
     if (fish.distribution) where.push(esc(fish.distribution));
     row("Where it lives", where.join("; "));
-
-    var limits = [];
-    if (fish.sizeLimit) limits.push("legal size " + esc(fish.sizeLimit));
-    if (fish.bagLimit) limits.push("bag limit " + esc(fish.bagLimit));
-    row("Fishing rules", limits.join(" &middot; "));
 
     row("Often confused with", fish.misId && esc(fish.misId));
     return rows.join("");

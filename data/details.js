@@ -2,7 +2,9 @@
 // Source: Queensland Government / CSIRO fish species guide (speciesPage entries).
 // Merged into the game at runtime by js/game.js. Fields are all optional:
 //   scientificName, family, sizeRange, distribution, misId, didYouKnow
-// Distribution keeps only non-state-specific ecology (QLD place names removed).
+// sizeRange is the fish's natural size (biological), NOT a legal size limit.
+// Fishing regulations (size/bag limits, seasons) are deliberately excluded
+// because they change over time; distribution keeps only non-state ecology.
 
 window.FISH_DETAILS = {
   "australian-bass": {
@@ -85,8 +87,7 @@ window.FISH_DETAILS = {
     "family": "Flathead",
     "sizeRange": "Common length: 50cm; Maximum length: 130cm",
     "distribution": "Estuaries and coastal bays; Found on sand, mud, gravel and seagrasses",
-    "misId": "Bartailed flathead, Northern sand flathead",
-    "didYouKnow": "Monitoring of this iconic fish began in 2007 and is one of the few species in Queensland with an upper and lower size limit (slot limit) of 40-75cm."
+    "misId": "Bartailed flathead, Northern sand flathead"
   },
   "luderick": {
     "scientificName": "Girella tricuspidata",
@@ -1591,7 +1592,7 @@ window.FISH_DETAILS = {
     "scientificName": "Scleropages leichardti",
     "family": "Saratoga",
     "sizeRange": "Common length: 50cm; Maximum length: 100cm",
-    "distribution": "Native to the Fitzroy river system; Prefer still waters and slow flowing turbid sections of rivers and can be found sheltering in lily-pads or below fallen timber; Due to their restricted natural range and poor fecundity they are prone to overfishing and hence have a possession limit of one",
+    "distribution": "Native to the Fitzroy river system; Prefer still waters and slow flowing turbid sections of rivers and can be found sheltering in lily-pads or below fallen timber",
     "misId": "Northern saratoga"
   },
   "spangled-emperor": {
