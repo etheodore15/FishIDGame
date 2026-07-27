@@ -183,9 +183,28 @@ body {
   margin-bottom: 0.5rem;
 }
 
-.fun-fact {
-  font-size: 1rem;
+.fact-sheet {
+  text-align: left;
   margin-bottom: 1rem;
+}
+
+.fact-lead {
+  font-size: 1.05rem;
+  background: #fff6db;
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 0.6rem;
+}
+
+.fact-row {
+  font-size: 0.98rem;
+  margin: 0.25rem 0;
+  line-height: 1.35;
+}
+
+.fact-label {
+  font-weight: bold;
+  color: var(--ocean-mid);
 }
 
 .results-score {

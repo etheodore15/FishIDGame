@@ -25,7 +25,7 @@
         prompt: "Which fish is this?",
         options: options,
         correctIndex: options.indexOf(fish.commonName),
-        funFact: buildFact(fish)
+        fish: fish
       };
     },
 
@@ -45,7 +45,7 @@
         prompt: "What is the size limit for the " + fish.commonName + "?",
         options: options,
         correctIndex: options.indexOf(fish.sizeLimit),
-        funFact: buildFact(fish)
+        fish: fish
       };
     },
 
@@ -65,17 +65,42 @@
         prompt: "Where does the " + fish.commonName + " live?",
         options: options,
         correctIndex: options.indexOf(fish.habitat),
-        funFact: buildFact(fish)
+        fish: fish
       };
     }
   };
 
-  function buildFact(fish) {
-    var bits = [];
-    if (fish.funFact) bits.push(fish.funFact);
-    if (fish.sizeLimit) bits.push("Size limit: " + fish.sizeLimit + ".");
-    if (fish.habitat) bits.push("Found in: " + fish.habitat.toLowerCase() + ".");
-    return bits.join(" ");
+  function esc(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  // Build a labelled fact-file for a fish from whatever fields it has.
+  // Returns HTML for #fact-sheet.
+  function factSheetHtml(fish) {
+    var rows = [];
+    var lead = fish.didYouKnow || fish.funFact;
+    if (lead) rows.push('<p class="fact-lead">💡 ' + esc(lead) + "</p>");
+
+    function row(label, value) {
+      if (value) rows.push('<p class="fact-row"><span class="fact-label">' +
+        label + ":</span> " + value + "</p>");
+    }
+    if (fish.scientificName) row("Scientific name", "<i>" + esc(fish.scientificName) + "</i>");
+    row("Family", fish.family && esc(fish.family));
+    row("Typical size", fish.sizeRange && esc(fish.sizeRange));
+
+    var where = [];
+    if (fish.habitat) where.push(esc(fish.habitat));
+    if (fish.distribution) where.push(esc(fish.distribution));
+    row("Where it lives", where.join("; "));
+
+    var limits = [];
+    if (fish.sizeLimit) limits.push("legal size " + esc(fish.sizeLimit));
+    if (fish.bagLimit) limits.push("bag limit " + esc(fish.bagLimit));
+    row("Fishing rules", limits.join(" &middot; "));
+
+    row("Often confused with", fish.misId && esc(fish.misId));
+    return rows.join("");
   }
 
   // ---- helpers ----
@@ -96,6 +121,15 @@
   // ---- game state ----
 
   var species = (window.FISH_DATA && window.FISH_DATA.species) || [];
+
+  // Merge optional extra facts (scientific name, family, size range,
+  // distribution, misId, didYouKnow) from data/details.js onto each species.
+  var details = window.FISH_DETAILS || {};
+  species.forEach(function (s) {
+    var d = details[s.id];
+    if (d) for (var k in d) if (d.hasOwnProperty(k) && !s[k]) s[k] = d[k];
+  });
+
   var questions = [];
   var current = 0;
   var score = 0;
@@ -113,7 +147,7 @@
     answers: document.getElementById("answers"),
     feedback: document.getElementById("feedback"),
     feedbackText: document.getElementById("feedback-text"),
-    funFact: document.getElementById("fun-fact"),
+    factSheet: document.getElementById("fact-sheet"),
     nextButton: document.getElementById("next-button"),
     resultsScore: document.getElementById("results-score"),
     resultsMessage: document.getElementById("results-message"),
@@ -180,8 +214,7 @@
     el.feedbackText.textContent = right
       ? pickRandom(["🎉 You got it!", "⭐ Amazing!", "🐠 Great catch!", "✨ Well done!"], 1)[0]
       : "Not quite — it's a " + q.options[q.correctIndex] + "!";
-    el.funFact.textContent = q.funFact || "";
-    el.funFact.style.display = q.funFact ? "" : "none";
+    el.factSheet.innerHTML = factSheetHtml(q.fish || {});
     el.nextButton.textContent = current + 1 < questions.length ? "Next Fish ➜" : "See My Score 🏆";
     el.feedback.classList.remove("hidden");
     el.feedback.scrollIntoView({ behavior: "smooth", block: "nearest" });

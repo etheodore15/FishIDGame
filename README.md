@@ -16,7 +16,8 @@ No install or server needed — just open `index.html` in any browser
 | `index.html` | The game page |
 | `css/style.css` | Ocean-themed styling |
 | `js/game.js` | Game logic and question generators |
-| `data/species.js` | All fish data (the only file to edit when adding fish) |
+| `data/species.js` | Core fish data — name, image, source, NSW rules |
+| `data/details.js` | Extra facts (scientific name, family, size range, distribution, misID, "did you know") merged in at runtime |
 | `images/` | Fish pictures |
 
 ## Adding fish
@@ -50,8 +51,16 @@ The game contains **398 species** with photos from three official sources:
 - **40 saltwater** species — NSW Recreational Saltwater Fishing Guide 2024–2025
   (with size limits, bag limits, habitat and fun facts)
 - **343 Queensland** species — Queensland Government / CSIRO fish species guide
-  (photo + name; QLD-specific rules are not yet imported, so these entries
-  carry no size/bag limit or habitat text)
+  (photo + name)
+
+Additionally, **373 species carry extra facts** pulled from the Queensland
+guide's per-species pages (`data/details.js`): scientific name, family,
+typical size range, distribution, common misidentifications, and a "did you
+know" note. These are shown as a fact-file after each answer and are merged
+in at runtime, so they enrich matching NSW species too (e.g. Murray Cod gets
+its scientific name and typical size alongside its NSW fishing rules). The
+distribution text keeps only non-state-specific ecology — Queensland place
+names are stripped out so it reads sensibly for a pan-Australian game.
 
 Each fish is tagged with its `source`, so the guides stay cleanly separable.
 The Queensland set was deduplicated against the NSW species (28 shared species
@@ -61,7 +70,7 @@ look-alike clusters were left out because they can't be told apart reliably
 from the guide photos: the five-way deep-sea groper group, the three
 near-identical marlins, and three of the four almost-identical tunas.
 
-Next up: importing QLD size/bag limits, and guides from other states.
+Next up: guides from other states.
 
 ## Extending the questions
 
