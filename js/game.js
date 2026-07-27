@@ -181,6 +181,7 @@
       ? pickRandom(["🎉 You got it!", "⭐ Amazing!", "🐠 Great catch!", "✨ Well done!"], 1)[0]
       : "Not quite — it's a " + q.options[q.correctIndex] + "!";
     el.funFact.textContent = q.funFact || "";
+    el.funFact.style.display = q.funFact ? "" : "none";
     el.nextButton.textContent = current + 1 < questions.length ? "Next Fish ➜" : "See My Score 🏆";
     el.feedback.classList.remove("hidden");
     el.feedback.scrollIntoView({ behavior: "smooth", block: "nearest" });

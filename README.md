@@ -43,20 +43,25 @@ When guides from other states are added later, register them in
 
 ## Current status
 
-The game contains **55 species** with photos, size limits, bag limits and
-habitat imported from two official guides:
+The game contains **398 species** with photos from three official sources:
 
 - **15 freshwater** species — NSW Recreational Freshwater Fishing Guide 2025–2026
+  (with size limits, bag limits, habitat and fun facts)
 - **40 saltwater** species — NSW Recreational Saltwater Fishing Guide 2024–2025
+  (with size limits, bag limits, habitat and fun facts)
+- **343 Queensland** species — Queensland Government / CSIRO fish species guide
+  (photo + name; QLD-specific rules are not yet imported, so these entries
+  carry no size/bag limit or habitat text)
 
-A few look-alike clusters in the saltwater guide were deliberately left out
-because the individual species can't be told apart reliably from the guide
-photos alone: the five-way deep-sea groper group (Hapuku, Bass Groper,
-Banded Rockcod, Blue-Eye Trevalla, Gemfish), the three near-identical
-marlins, and three of the four almost-identical tunas (Yellowfin is kept).
-The two eels appear in both guides, so they're listed once (as freshwater).
+Each fish is tagged with its `source`, so the guides stay cleanly separable.
+The Queensland set was deduplicated against the NSW species (28 shared species
+such as Snapper, Cobia and Mangrove Jack are listed once), and non-fish
+wildlife and graphics from the QLD guide were excluded. A few NSW-saltwater
+look-alike clusters were left out because they can't be told apart reliably
+from the guide photos: the five-way deep-sea groper group, the three
+near-identical marlins, and three of the four almost-identical tunas.
 
-Next up: guides from other Australian states.
+Next up: importing QLD size/bag limits, and guides from other states.
 
 ## Extending the questions
 
