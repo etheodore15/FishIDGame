@@ -1637,12 +1637,6 @@ window.FISH_DATA = {
       source: "qld"
     },
     {
-      id: "mollusc2",
-      commonName: "Mollusc2",
-      image: "images/qld/mollusc2.jpg",
-      source: "qld"
-    },
-    {
       id: "moreton-bay-bug",
       commonName: "Moreton bay bug",
       image: "images/qld/moreton-bay-bug.jpg",
@@ -1757,12 +1751,6 @@ window.FISH_DATA = {
       source: "qld"
     },
     {
-      id: "ornate-rock-lobster",
-      commonName: "Ornate rock lobster",
-      image: "images/qld/ornate-rock-lobster.jpg",
-      source: "qld"
-    },
-    {
       id: "pacific-blue-eye",
       commonName: "Pacific blue eye",
       image: "images/qld/pacific-blue-eye.jpg",
@@ -1806,7 +1794,7 @@ window.FISH_DATA = {
     },
     {
       id: "photololigo-pencil-squid",
-      commonName: "Photololigo Pencil Squid",
+      commonName: "Pencil Squid",
       image: "images/qld/photololigo-pencil-squid.jpg",
       source: "qld"
     },
@@ -1836,7 +1824,7 @@ window.FISH_DATA = {
     },
     {
       id: "polyprion-americanus-bass-groper",
-      commonName: "Polyprion americanus Bass Groper",
+      commonName: "Bass Groper",
       image: "images/qld/polyprion-americanus-bass-groper.jpg",
       source: "qld"
     },
@@ -2327,14 +2315,8 @@ window.FISH_DATA = {
       source: "qld"
     },
     {
-      id: "tropical",
-      commonName: "Tropical",
-      image: "images/qld/tropical.jpg",
-      source: "qld"
-    },
-    {
       id: "tropical-rocklobster",
-      commonName: "Tropical rocklobster",
+      commonName: "Tropical Rock Lobster",
       image: "images/qld/tropical-rocklobster.png",
       source: "qld"
     },

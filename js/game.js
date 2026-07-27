@@ -14,8 +14,16 @@
   var OPTION_COUNT = 4;
   var ENABLED_QUESTION_TYPES = ["species"];
 
+  // Not every species is a fish — the guide also includes crabs, lobsters,
+  // squid, oysters and other shellfish. "Which fish is this?" doesn't fit
+  // those, so the prompt adapts.
+  var NON_FISH = /mollusc|gastropod|oyster|mussel|clam|cockle|pipi|\bscallops?\b|\bark\b|whelk|squid|cuttlefish|octopus|crab|lobster|\bbug\b|crayfish|yabby|redclaw|blueclaw|prawn|shrimp|beche-de-mer|teatfish|sea cucumber|bivalve/i;
+  function isFish(fish) {
+    return !(NON_FISH.test(fish.category || "") || NON_FISH.test(fish.commonName || ""));
+  }
+
   var QUESTION_GENERATORS = {
-    // "Which fish is this?" — picture shown, names as options.
+    // "Which fish is this?" (or "Which species is this?" for shellfish etc.)
     species: function (fish, allSpecies) {
       var wrong = pickRandom(
         allSpecies.filter(function (s) { return s.id !== fish.id; }),
@@ -24,7 +32,7 @@
       var options = shuffle(wrong.concat(fish.commonName));
       return {
         imageSrc: fish.image,
-        prompt: "Which fish is this?",
+        prompt: isFish(fish) ? "Which fish is this?" : "Which species is this?",
         options: options,
         correctIndex: options.indexOf(fish.commonName),
         fish: fish
@@ -68,7 +76,7 @@
         label + ":</span> " + value + "</p>");
     }
     if (fish.scientificName) row("Scientific name", "<i>" + esc(fish.scientificName) + "</i>");
-    row("Family", fish.family && esc(fish.family));
+    row("Group", fish.category && esc(fish.category));
     row("Typical size", fish.sizeRange && esc(fish.sizeRange));
 
     var where = [];
