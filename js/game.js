@@ -14,6 +14,10 @@
   var OPTION_COUNT = 4;
   var ENABLED_QUESTION_TYPES = ["species"];
 
+  // After answering, the fact screen keeps the "Next" button locked for this
+  // many seconds so there is time to read the facts. Bump to 10 if needed.
+  var FACT_GATE_SECONDS = 5;
+
   // Not every species is a fish — the guide also includes crabs, lobsters,
   // squid, oysters and other shellfish. "Which fish is this?" doesn't fit
   // those, so the prompt adapts.
@@ -119,9 +123,12 @@
   var current = 0;
   var score = 0;
 
+  var gateTimer = null;
+
   var el = {
     startScreen: document.getElementById("start-screen"),
     questionScreen: document.getElementById("question-screen"),
+    factScreen: document.getElementById("fact-screen"),
     resultsScreen: document.getElementById("results-screen"),
     startButton: document.getElementById("start-button"),
     questionCount: document.getElementById("question-count"),
@@ -130,7 +137,9 @@
     fishImage: document.getElementById("fish-image"),
     questionText: document.getElementById("question-text"),
     answers: document.getElementById("answers"),
-    feedback: document.getElementById("feedback"),
+    factImage: document.getElementById("fact-image"),
+    factProgress: document.getElementById("fact-progress"),
+    factScore: document.getElementById("fact-score"),
     feedbackText: document.getElementById("feedback-text"),
     factSheet: document.getElementById("fact-sheet"),
     nextButton: document.getElementById("next-button"),
@@ -140,9 +149,10 @@
   };
 
   function showScreen(screen) {
-    [el.startScreen, el.questionScreen, el.resultsScreen].forEach(function (s) {
+    [el.startScreen, el.questionScreen, el.factScreen, el.resultsScreen].forEach(function (s) {
       s.classList.toggle("active", s === screen);
     });
+    window.scrollTo(0, 0);
   }
 
   function buildQuestions(count) {
@@ -173,7 +183,6 @@
     el.score.textContent = "Score: " + score;
     el.fishImage.src = q.imageSrc;
     el.questionText.textContent = q.prompt;
-    el.feedback.classList.add("hidden");
     el.answers.innerHTML = "";
     q.options.forEach(function (option, index) {
       var button = document.createElement("button");
@@ -187,28 +196,55 @@
   function answer(index, clickedButton) {
     var q = questions[current];
     var buttons = el.answers.querySelectorAll(".answer-button");
-    buttons.forEach(function (b, i) {
-      b.disabled = true;
-      if (i === q.correctIndex) b.classList.add("correct");
-      else if (b === clickedButton) b.classList.add("wrong");
-      else b.classList.add("dimmed");
-    });
+    buttons.forEach(function (b) { b.disabled = true; });
     var right = index === q.correctIndex;
     if (right) score++;
-    el.score.textContent = "Score: " + score;
+
+    // Move to the fact screen showing the fish, the result and the facts.
+    el.factImage.src = q.imageSrc;
+    el.factProgress.textContent = "Question " + (current + 1) + " of " + questions.length;
+    el.factScore.textContent = "Score: " + score;
     el.feedbackText.textContent = right
       ? pickRandom(["🎉 You got it!", "⭐ Amazing!", "🐠 Great catch!", "✨ Well done!"], 1)[0]
-      : "Not quite — it's a " + q.options[q.correctIndex] + "!";
+      : "Not quite — you picked " + q.options[index] + ". It's a " + q.options[q.correctIndex] + "!";
+    el.feedbackText.className = right ? "result-right" : "result-wrong";
     el.factSheet.innerHTML = factSheetHtml(q.fish || {});
-    el.nextButton.textContent = current + 1 < questions.length ? "Next Fish ➜" : "See My Score 🏆";
-    el.feedback.classList.remove("hidden");
-    el.feedback.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    showScreen(el.factScreen);
+    startNextGate();
+  }
+
+  // Lock the Next button for FACT_GATE_SECONDS, counting down, so there's
+  // time to read the facts before the next question is released.
+  function startNextGate() {
+    var lastLabel = current + 1 < questions.length ? "Next Fish ➜" : "See My Score 🏆";
+    var remaining = FACT_GATE_SECONDS;
+    if (gateTimer) clearInterval(gateTimer);
+    el.nextButton.disabled = true;
+    el.nextButton.classList.add("locked");
+    el.nextButton.textContent = "Read the facts… " + remaining;
+    gateTimer = setInterval(function () {
+      remaining -= 1;
+      if (remaining > 0) {
+        el.nextButton.textContent = "Read the facts… " + remaining;
+      } else {
+        clearInterval(gateTimer);
+        gateTimer = null;
+        el.nextButton.disabled = false;
+        el.nextButton.classList.remove("locked");
+        el.nextButton.textContent = lastLabel;
+      }
+    }, 1000);
   }
 
   function nextQuestion() {
+    if (el.nextButton.disabled) return; // still gated
     current++;
-    if (current < questions.length) renderQuestion();
-    else showResults();
+    if (current < questions.length) {
+      showScreen(el.questionScreen);
+      renderQuestion();
+    } else {
+      showResults();
+    }
   }
 
   function showResults() {

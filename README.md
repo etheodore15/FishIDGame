@@ -79,6 +79,11 @@ Next up: guides from other states.
 
 ## Extending the questions
 
+After each answer the game moves to a **fact screen** showing the fish and
+its facts, with the **Next button locked for a few seconds** so there's time
+to actually read them. Change how long by editing `FACT_GATE_SECONDS` near
+the top of `js/game.js` (defaults to 5; set to 10 to slow it down more).
+
 `js/game.js` has a question-generator registry. Species identification is
 enabled now; a **habitat** question generator is already written and can be
 turned on by adding `"habitat"` to `ENABLED_QUESTION_TYPES`. (There is

@@ -38,11 +38,23 @@
       </div>
       <h2 id="question-text">Which fish is this?</h2>
       <div id="answers" class="answers"></div>
-      <div id="feedback" class="feedback hidden">
+    </section>
+
+    <!-- Fact screen: shown after answering. The Next button stays locked for
+         a few seconds so there's time to read the facts before moving on. -->
+    <section id="fact-screen" class="screen">
+      <header class="hud">
+        <span id="fact-progress"></span>
+        <span id="fact-score"></span>
+      </header>
+      <div class="fish-card">
+        <img id="fact-image" src="" alt="">
+      </div>
+      <div class="feedback">
         <p id="feedback-text"></p>
         <div id="fact-sheet" class="fact-sheet"></div>
-        <button id="next-button" class="big-button">Next Fish ➜</button>
       </div>
+      <button id="next-button" class="big-button" disabled>Next Fish ➜</button>
     </section>
 
     <!-- Results screen -->
