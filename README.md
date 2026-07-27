@@ -43,10 +43,20 @@ When guides from other states are added later, register them in
 
 ## Current status
 
-The game contains **15 freshwater species** with photos, size limits, bag
-limits and habitat imported from the **NSW Recreational Freshwater Fishing
-Guide 2025–2026** (DPIRD). Next up: species from the NSW saltwater guide,
-and later guides from other Australian states.
+The game contains **55 species** with photos, size limits, bag limits and
+habitat imported from two official guides:
+
+- **15 freshwater** species — NSW Recreational Freshwater Fishing Guide 2025–2026
+- **40 saltwater** species — NSW Recreational Saltwater Fishing Guide 2024–2025
+
+A few look-alike clusters in the saltwater guide were deliberately left out
+because the individual species can't be told apart reliably from the guide
+photos alone: the five-way deep-sea groper group (Hapuku, Bass Groper,
+Banded Rockcod, Blue-Eye Trevalla, Gemfish), the three near-identical
+marlins, and three of the four almost-identical tunas (Yellowfin is kept).
+The two eels appear in both guides, so they're listed once (as freshwater).
+
+Next up: guides from other Australian states.
 
 ## Extending the questions
 
