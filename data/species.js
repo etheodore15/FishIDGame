@@ -2322,7 +2322,7 @@ window.FISH_DATA = {
     },
     {
       id: "trout-cod",
-      commonName: "Trout cod",
+      commonName: "Highfin Rockcod",
       image: "images/qld/trout-cod.jpg",
       source: "qld"
     },
