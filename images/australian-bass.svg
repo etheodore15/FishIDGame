@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200">
+  <rect width="400" height="200" fill="#dde8d5"/>
+  <!-- stocky bronze-olive body with spiky dorsal fin -->
+  <path d="M75 105 Q100 60 175 55 Q260 52 310 95 L310 118 Q250 155 170 150 Q100 145 75 105 Z" fill="#7a6a3f"/>
+  <path d="M310 95 L365 72 L357 106 L365 140 L310 118 Z" fill="#655731"/>
+  <path d="M125 62 L140 38 L150 60 L165 36 L175 58 L190 38 L200 56 L215 40 L222 58 L180 66 Z" fill="#554a29"/>
+  <path d="M155 148 Q180 166 210 152 L200 140 Z" fill="#655731"/>
+  <circle cx="105" cy="88" r="8" fill="#2b2b2b"/>
+  <circle cx="108" cy="85" r="2.5" fill="#fff"/>
+  <path d="M75 105 Q140 118 310 106" stroke="#554a29" stroke-width="3" fill="none" opacity="0.5"/>
+  <path d="M100 118 Q118 132 138 124 L132 112 Z" fill="#655731"/>
+</svg>

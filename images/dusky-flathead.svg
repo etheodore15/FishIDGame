@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200">
+  <rect width="400" height="200" fill="#e8dcc0"/>
+  <!-- long, flat, sandy-brown body with pointed head -->
+  <path d="M30 100 L120 78 Q250 62 340 92 L340 108 Q250 138 120 122 Z" fill="#8a6f47"/>
+  <path d="M340 92 L385 70 L375 100 L385 130 L340 108 Z" fill="#75603f"/>
+  <path d="M150 78 Q180 55 230 68 L220 80 Z" fill="#75603f"/>
+  <circle cx="70" cy="90" r="7" fill="#2b2b2b"/>
+  <circle cx="72" cy="88" r="2.5" fill="#fff"/>
+  <g fill="#5f4c32" opacity="0.6">
+    <circle cx="150" cy="100" r="5"/><circle cx="190" cy="90" r="4"/>
+    <circle cx="230" cy="105" r="5"/><circle cx="270" cy="95" r="4"/>
+  </g>
+  <path d="M30 100 L55 96 L55 106 Z" fill="#6e5838"/>
+</svg>
