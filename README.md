@@ -43,11 +43,10 @@ When guides from other states are added later, register them in
 
 ## Current status
 
-The six species currently in the game are **placeholders with cartoon
-illustrations**, so the game is playable right away. The plan is to import
-the real photos, names, and size/bag limits from the **NSW Recreational
-Fishing Guide** PDF once it is added to the project, and later extend with
-guides from other Australian states.
+The game contains **15 freshwater species** with photos, size limits, bag
+limits and habitat imported from the **NSW Recreational Freshwater Fishing
+Guide 2025–2026** (DPIRD). Next up: species from the NSW saltwater guide,
+and later guides from other Australian states.
 
 ## Extending the questions
 
