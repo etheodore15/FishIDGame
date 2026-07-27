@@ -97,11 +97,34 @@ body {
 
 .hud {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
   font-size: 1.1rem;
   font-weight: bold;
   color: var(--sand);
   margin-bottom: 1rem;
+}
+
+.hud #progress,
+.hud #fact-progress {
+  flex: 1; /* push score + quit to the right */
+}
+
+.quit-button {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 0.35rem 0.7rem;
+  border: 2px solid var(--sand);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--sand);
+  cursor: pointer;
+}
+
+.quit-button:hover {
+  background: var(--sand);
+  color: var(--ocean-deep);
 }
 
 .fish-card {

@@ -15,8 +15,8 @@
   var ENABLED_QUESTION_TYPES = ["species"];
 
   // After answering, the fact screen keeps the "Next" button locked for this
-  // many seconds so there is time to read the facts. Bump to 10 if needed.
-  var FACT_GATE_SECONDS = 5;
+  // many seconds so there is time to read the facts.
+  var FACT_GATE_SECONDS = 10;
 
   // Not every species is a fish — the guide also includes crabs, lobsters,
   // squid, oysters and other shellfish. "Which fish is this?" doesn't fit
@@ -258,7 +258,17 @@
       "Every angler starts somewhere — play again to learn the fish! 🌊";
   }
 
+  // End the current game and return to the start screen (where it can be
+  // restarted). Clears any running fact-screen countdown.
+  function quitGame() {
+    if (gateTimer) { clearInterval(gateTimer); gateTimer = null; }
+    showScreen(el.startScreen);
+  }
+
   el.startButton.addEventListener("click", startGame);
   el.nextButton.addEventListener("click", nextQuestion);
   el.playAgainButton.addEventListener("click", function () { showScreen(el.startScreen); });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-quit]"), function (b) {
+    b.addEventListener("click", quitGame);
+  });
 })();
