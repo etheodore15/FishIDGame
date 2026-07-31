@@ -130,6 +130,17 @@
     questionScreen: document.getElementById("question-screen"),
     factScreen: document.getElementById("fact-screen"),
     resultsScreen: document.getElementById("results-screen"),
+    searchScreen: document.getElementById("search-screen"),
+    infoScreen: document.getElementById("info-screen"),
+    lookupButton: document.getElementById("lookup-button"),
+    searchInput: document.getElementById("search-input"),
+    searchCount: document.getElementById("search-count"),
+    searchResults: document.getElementById("search-results"),
+    searchBack: document.getElementById("search-back"),
+    infoImage: document.getElementById("info-image"),
+    infoName: document.getElementById("info-name"),
+    infoFacts: document.getElementById("info-facts"),
+    infoBack: document.getElementById("info-back"),
     startButton: document.getElementById("start-button"),
     questionCount: document.getElementById("question-count"),
     progress: document.getElementById("progress"),
@@ -149,7 +160,8 @@
   };
 
   function showScreen(screen) {
-    [el.startScreen, el.questionScreen, el.factScreen, el.resultsScreen].forEach(function (s) {
+    [el.startScreen, el.questionScreen, el.factScreen, el.resultsScreen,
+     el.searchScreen, el.infoScreen].forEach(function (s) {
       s.classList.toggle("active", s === screen);
     });
     window.scrollTo(0, 0);
@@ -259,6 +271,113 @@
       ratio >= 0.4 ? "Good try! Keep practising and you'll be an expert soon. 🐟" :
       "Every angler starts somewhere — play again to learn the fish! 🌊";
   }
+
+  // ---- search / browse ----
+
+  function normalizeText(s) {
+    return (s == null ? "" : String(s)).toLowerCase()
+      .replace(/[^a-z0-9]+/g, " ").replace(/\s+/g, " ").trim();
+  }
+
+  // Small edit distance for typo tolerance.
+  function editDistance(a, b) {
+    var m = a.length, n = b.length;
+    if (!m) return n;
+    if (!n) return m;
+    var prev = [], cur = [], i, j;
+    for (j = 0; j <= n; j++) prev[j] = j;
+    for (i = 1; i <= m; i++) {
+      cur[0] = i;
+      for (j = 1; j <= n; j++) {
+        var cost = a.charAt(i - 1) === b.charAt(j - 1) ? 0 : 1;
+        cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + cost);
+      }
+      for (j = 0; j <= n; j++) prev[j] = cur[j];
+    }
+    return prev[n];
+  }
+
+  // Rough match of a query against a fish's name, group and scientific name.
+  // Returns a score (higher = better); 0 means no match.
+  function scoreFish(f, q) {
+    var name = normalizeText(f.commonName);
+    var cat = normalizeText(f.category);
+    var sci = normalizeText(f.scientificName);
+    var hay = name + " " + cat + " " + sci;
+    if (name === q) return 100;
+    if (name.lastIndexOf(q, 0) === 0) return 92;   // starts with
+    if (name.indexOf(q) >= 0) return 84;
+    if (sci.indexOf(q) >= 0) return 74;
+    if (cat.indexOf(q) >= 0) return 66;
+    if (hay.indexOf(q) >= 0) return 58;
+    var words = q.split(" ").filter(Boolean), hits = 0;
+    words.forEach(function (w) { if (hay.indexOf(w) >= 0) hits++; });
+    if (words.length && hits === words.length) return 46;
+    if (hits > 0) return 30 + hits;
+    if (q.length >= 4) {                            // typo tolerance on name words
+      var best = 99, parts = name.split(" ");
+      for (var i = 0; i < parts.length; i++) {
+        var d = editDistance(q, parts[i]);
+        if (d < best) best = d;
+      }
+      if (best <= (q.length <= 5 ? 1 : 2)) return 22 - best;
+    }
+    return 0;
+  }
+
+  function byName(a, b) { return a.commonName.localeCompare(b.commonName); }
+
+  function renderSearch() {
+    var q = normalizeText(el.searchInput.value);
+    var list;
+    if (!q) {
+      list = species.slice().sort(byName);
+    } else {
+      list = species.map(function (f) { return { f: f, s: scoreFish(f, q) }; })
+        .filter(function (x) { return x.s > 0; })
+        .sort(function (a, b) { return b.s - a.s || byName(a.f, b.f); })
+        .map(function (x) { return x.f; });
+    }
+    el.searchCount.textContent = !q
+      ? species.length + " fish — type a name, group or species"
+      : list.length + (list.length === 1 ? " match" : " matches");
+    var html = "";
+    list.forEach(function (f) {
+      html += '<button class="fish-tile" data-id="' + f.id + '">' +
+        '<img src="' + f.image + '" alt="" loading="lazy">' +
+        '<span class="tile-name">' + esc(f.commonName) + '</span>' +
+        (f.category ? '<span class="tile-group">' + esc(f.category) + '</span>' : '') +
+        '</button>';
+    });
+    el.searchResults.innerHTML = html ||
+      '<p class="search-count">No fish found — try a different word.</p>';
+  }
+
+  function openSearch() {
+    showScreen(el.searchScreen);
+    renderSearch();
+    el.searchInput.focus();
+  }
+
+  function openInfo(f) {
+    el.infoImage.src = f.image;
+    el.infoImage.alt = f.commonName;
+    el.infoName.textContent = f.commonName;
+    el.infoFacts.innerHTML = factSheetHtml(f);
+    showScreen(el.infoScreen);
+  }
+
+  el.lookupButton.addEventListener("click", openSearch);
+  el.searchInput.addEventListener("input", renderSearch);
+  el.searchBack.addEventListener("click", function () { showScreen(el.startScreen); });
+  el.infoBack.addEventListener("click", function () { showScreen(el.searchScreen); });
+  el.searchResults.addEventListener("click", function (e) {
+    var tile = e.target.closest(".fish-tile");
+    if (!tile) return;
+    var id = tile.getAttribute("data-id");
+    var f = species.filter(function (s) { return s.id === id; })[0];
+    if (f) openInfo(f);
+  });
 
   var quitOverlay = document.getElementById("quit-overlay");
 

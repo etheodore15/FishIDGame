@@ -87,6 +87,15 @@ the top of `js/game.js` (currently 10 seconds).
 A **Quit** button in the top corner ends the current game at any time and
 returns to the start screen, where a new game can be started.
 
+## Look up a fish (search / browse)
+
+The **🔍 Look up a fish** button on the start screen opens a search screen.
+Typing matches — roughly, so partial words and small typos still work —
+against each fish's common name, group (category) and scientific name.
+Results appear as a pictorial grid; tapping a fish opens its info screen
+(photo plus the same fact-file used in the game). With no text entered it
+lists every species to browse.
+
 `js/game.js` has a question-generator registry. Species identification is
 enabled now; a **habitat** question generator is already written and can be
 turned on by adding `"habitat"` to `ENABLED_QUESTION_TYPES`. (There is

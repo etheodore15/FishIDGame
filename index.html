@@ -25,6 +25,32 @@
         </select>
       </div>
       <button id="start-button" class="big-button">Start Fishing!</button>
+      <button id="lookup-button" class="big-button secondary-button">🔍 Look up a fish</button>
+    </section>
+
+    <!-- Search / browse screen -->
+    <section id="search-screen" class="screen">
+      <div class="search-bar">
+        <button id="search-back" class="quit-button">‹ Back</button>
+        <input id="search-input" type="search" autocomplete="off"
+               placeholder="Search name, group or species…">
+      </div>
+      <p id="search-count" class="search-count"></p>
+      <div id="search-results" class="search-grid"></div>
+    </section>
+
+    <!-- Fish info screen (from search) -->
+    <section id="info-screen" class="screen">
+      <header class="hud">
+        <button id="info-back" class="quit-button">‹ Back to search</button>
+      </header>
+      <div class="fish-card">
+        <img id="info-image" src="" alt="">
+      </div>
+      <h2 id="info-name" class="info-name"></h2>
+      <div class="feedback">
+        <div id="info-facts" class="fact-sheet"></div>
+      </div>
     </section>
 
     <!-- Question screen -->
