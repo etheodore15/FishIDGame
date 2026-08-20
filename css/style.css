@@ -177,6 +177,52 @@ body {
   margin-bottom: 1rem;
 }
 
+/* ---- study / learn ---- */
+.study-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+
+.order-toggle {
+  display: flex;
+  border: 2px solid var(--sand);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.order-btn {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 0.35rem 0.8rem;
+  border: none;
+  background: transparent;
+  color: var(--sand);
+  cursor: pointer;
+}
+
+.order-btn.active {
+  background: var(--sand);
+  color: var(--ocean-deep);
+}
+
+.study-nav {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.nav-button {
+  flex: 1;
+  font-size: 1.1rem;
+}
+
+.nav-button:disabled {
+  opacity: 0.5;
+}
+
 .hud {
   display: flex;
   align-items: center;

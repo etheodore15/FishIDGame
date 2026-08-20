@@ -25,7 +25,31 @@
         </select>
       </div>
       <button id="start-button" class="big-button">Start Fishing!</button>
+      <button id="learn-button" class="big-button secondary-button">📖 Learn the fish</button>
       <button id="lookup-button" class="big-button secondary-button">🔍 Look up a fish</button>
+    </section>
+
+    <!-- Study / learn screen: browse every fish card by card -->
+    <section id="study-screen" class="screen">
+      <div class="study-bar">
+        <button id="study-back" class="quit-button">‹ Back</button>
+        <div class="order-toggle">
+          <button id="order-random" class="order-btn">🔀 Random</button>
+          <button id="order-az" class="order-btn">🔤 A–Z</button>
+        </div>
+      </div>
+      <p id="study-position" class="search-count"></p>
+      <div class="fish-card">
+        <img id="study-image" src="" alt="">
+      </div>
+      <h2 id="study-name" class="info-name"></h2>
+      <div class="feedback">
+        <div id="study-facts" class="fact-sheet"></div>
+      </div>
+      <div class="study-nav">
+        <button id="study-prev" class="big-button nav-button">‹ Previous</button>
+        <button id="study-next" class="big-button nav-button">Next ›</button>
+      </div>
     </section>
 
     <!-- Search / browse screen -->

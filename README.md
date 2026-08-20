@@ -87,6 +87,14 @@ the top of `js/game.js` (currently 10 seconds).
 A **Quit** button in the top corner ends the current game at any time and
 returns to the start screen, where a new game can be started.
 
+## Learn the fish (study mode)
+
+The **📖 Learn the fish** button walks through every species one card at a
+time — photo plus the fact-file — with Previous/Next (wrapping around) and a
+position counter. It opens in **random** order and a toggle switches to
+**A–Z**; switching keeps the current fish on screen and repositions it in the
+new order. Good for browsing to learn the species rather than being quizzed.
+
 ## Look up a fish (search / browse)
 
 The **🔍 Look up a fish** button on the start screen opens a search screen.

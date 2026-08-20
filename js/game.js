@@ -132,6 +132,17 @@
     resultsScreen: document.getElementById("results-screen"),
     searchScreen: document.getElementById("search-screen"),
     infoScreen: document.getElementById("info-screen"),
+    studyScreen: document.getElementById("study-screen"),
+    learnButton: document.getElementById("learn-button"),
+    studyBack: document.getElementById("study-back"),
+    orderRandom: document.getElementById("order-random"),
+    orderAz: document.getElementById("order-az"),
+    studyPosition: document.getElementById("study-position"),
+    studyImage: document.getElementById("study-image"),
+    studyName: document.getElementById("study-name"),
+    studyFacts: document.getElementById("study-facts"),
+    studyPrev: document.getElementById("study-prev"),
+    studyNext: document.getElementById("study-next"),
     lookupButton: document.getElementById("lookup-button"),
     searchInput: document.getElementById("search-input"),
     searchCount: document.getElementById("search-count"),
@@ -161,7 +172,7 @@
 
   function showScreen(screen) {
     [el.startScreen, el.questionScreen, el.factScreen, el.resultsScreen,
-     el.searchScreen, el.infoScreen].forEach(function (s) {
+     el.searchScreen, el.infoScreen, el.studyScreen].forEach(function (s) {
       s.classList.toggle("active", s === screen);
     });
     window.scrollTo(0, 0);
@@ -271,6 +282,65 @@
       ratio >= 0.4 ? "Good try! Keep practising and you'll be an expert soon. 🐟" :
       "Every angler starts somewhere — play again to learn the fish! 🌊";
   }
+
+  // ---- study / learn (browse every fish card by card) ----
+
+  var studyOrder = [];
+  var studyIndex = 0;
+  var studyMode = "random"; // "random" or "az"
+
+  function buildStudyOrder(keepFish) {
+    studyOrder = studyMode === "az" ? species.slice().sort(byName) : shuffle(species);
+    // keep the currently shown fish in view when the order changes
+    studyIndex = 0;
+    if (keepFish) {
+      for (var i = 0; i < studyOrder.length; i++) {
+        if (studyOrder[i].id === keepFish.id) { studyIndex = i; break; }
+      }
+    }
+    el.orderRandom.classList.toggle("active", studyMode === "random");
+    el.orderAz.classList.toggle("active", studyMode === "az");
+  }
+
+  function renderStudyCard() {
+    var f = studyOrder[studyIndex];
+    if (!f) return;
+    el.studyImage.src = f.image;
+    el.studyImage.alt = f.commonName;
+    el.studyName.textContent = f.commonName;
+    el.studyFacts.innerHTML = factSheetHtml(f);
+    el.studyPosition.textContent = (studyIndex + 1) + " of " + studyOrder.length +
+      (studyMode === "az" ? " · A–Z" : " · shuffled");
+    window.scrollTo(0, 0);
+  }
+
+  function openStudy() {
+    studyMode = "random";
+    buildStudyOrder(null);
+    showScreen(el.studyScreen);
+    renderStudyCard();
+  }
+
+  function studyStep(delta) {
+    var n = studyOrder.length;
+    if (!n) return;
+    studyIndex = (studyIndex + delta + n) % n; // wrap around
+    renderStudyCard();
+  }
+
+  function setStudyMode(mode) {
+    if (mode === studyMode) return;
+    studyMode = mode;
+    buildStudyOrder(studyOrder[studyIndex]); // keep current fish
+    renderStudyCard();
+  }
+
+  el.learnButton.addEventListener("click", openStudy);
+  el.studyBack.addEventListener("click", function () { showScreen(el.startScreen); });
+  el.studyPrev.addEventListener("click", function () { studyStep(-1); });
+  el.studyNext.addEventListener("click", function () { studyStep(1); });
+  el.orderRandom.addEventListener("click", function () { setStudyMode("random"); });
+  el.orderAz.addEventListener("click", function () { setStudyMode("az"); });
 
   // ---- search / browse ----
 
